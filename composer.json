@@ -1,0 +1,26 @@
+{
+    "name": "gekkone/sfic",
+    "description": "Simple File Integrity Checker",
+    "type": "project",
+    "license": "GPL-3.0",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Gekkone",
+            "email": "sergej.soloyov@yandex.ru",
+            "role": "Developer",
+            "homepage": "https://github.com/gekkone"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6",
+        "ext-mbstring": "*",
+        "monolog/monolog": "^1.25"
+    },
+    "autoload": {
+        "psr-4": {
+            "SFIC\\": "src/"
+        }
+    }
+}
