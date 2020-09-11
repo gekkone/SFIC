@@ -22,6 +22,10 @@ $scaner->scan();
  */
 function log_rotate($logsDir, $count)
 {
+    if (!is_dir($logsDir)) {
+        return;
+    }
+
     $it = new FilesystemIterator($logsDir, FilesystemIterator::CURRENT_AS_PATHNAME);
     /**
      * @var DateTime[]
