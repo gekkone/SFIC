@@ -88,7 +88,7 @@ class SficScan
      */
     private function scanDir($config)
     {
-        if (!isset($config['dir'])) {
+        if (empty($config['dir'])) {
             $this->logger->warning("В одном из наборов конфигурации не задан"
                 . "параметр 'dir' - папка для сканирования");
             return false;
