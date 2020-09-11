@@ -6,7 +6,7 @@ use SFIC\SficScan;
 
 require 'vendor/autoload.php';
 
-log_rotate('logs', 2);
+log_rotate('logs', 10);
 $logFile = 'logs/SFIC_' . date('d-m-Y') . '.log';
 $logger = new Logger('SFIC');
 $logger->pushHandler(new StreamHandler($logFile, Logger::INFO));
@@ -33,7 +33,7 @@ function log_rotate($logsDir, $count)
             continue;
         }
 
-        if (preg_match('/SFIC_([0-9]{2}-[0-9]{2}-[0-9]{4})\.log/', $filename, $matches) === false) {
+        if (!preg_match('/SFIC_([0-9]{2}-[0-9]{2}-[0-9]{4})\.log/', $filename, $matches)) {
             continue;
         }
 
@@ -59,8 +59,9 @@ function log_rotate($logsDir, $count)
     $fileCount = count($dateFiles);
 
     if ($fileCount > $count) {
-        for ($i = $fileCount - 1; $i >= $count; --$i) {
+        for ($i = 0; $i < $fileCount - $count; ++$i) {
             $filename = $logsDir . '/SFIC_' . $dateFiles[$i]->format('d-m-Y') . '.log';
+            unlink($filename);
         }
     }
 }
