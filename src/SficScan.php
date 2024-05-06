@@ -124,7 +124,26 @@ class SficScan
         }
 
         $dirIt = new RecursiveDirectoryIterator($scandir);
-        $it = new RecursiveIteratorIterator($dirIt, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
+        $filter = new \RecursiveCallbackFilterIterator($dirIt, function ($current) use ($config) {
+            if (!$current->isDir()
+                || !isset($config['exclude_dirs'])
+                || !is_array($config['exclude_dirs'])
+            ) {
+                return true;
+            }
+
+            /** @var \SplFileInfo $current */
+            $path = $current->getRealPath() . '/';
+
+            foreach ($config['exclude_dirs'] as $pattern) {
+                if (fnmatch($pattern, $path)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+        $it = new RecursiveIteratorIterator($filter, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
         foreach ($it as $filename) {
             $ext = mb_strtolower(pathinfo($filename, PATHINFO_EXTENSION));
