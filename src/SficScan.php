@@ -76,7 +76,7 @@ class SficScan
                 $this->emailNotify($to, $from, $commonReport);
             }
         } else {
-            $this->logger->error('Уведомление не было отпправлно на почту, '
+            $this->logger->error('Уведомление не было отправлено на почту, '
                 . 'не установлены email адрес отправителя или получателя');
         }
     }
@@ -119,7 +119,7 @@ class SficScan
         $dataFile = @fopen($scandir . $this->dataFile, 'w');
         if (!$dataFile) {
             $this->logger->critical("Не удалось создать файл $scandir$this->dataFile с данными для "
-                . 'сохраннеия результата сканирования');
+                . 'сохранения результата сканирования');
             return false;
         }
 
@@ -135,7 +135,7 @@ class SficScan
 
             $data = new FileData();
             if (!$data->setFileData($filename, $mode)) {
-                $this->logger->error("Для $filename не удалось сформировать данные с иформацией");
+                $this->logger->error("Для $filename не удалось сформировать данные с информацией");
                 continue;
             }
 
